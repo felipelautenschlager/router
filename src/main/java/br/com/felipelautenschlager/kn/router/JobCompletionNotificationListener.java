@@ -1,6 +1,6 @@
 package br.com.felipelautenschlager.kn.router;
 
-import br.com.felipelautenschlager.kn.router.model.RawRoute;
+import br.com.felipelautenschlager.kn.router.model.Route;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.BatchStatus;
@@ -34,11 +34,11 @@ public class JobCompletionNotificationListener extends JobExecutionListenerSuppo
         if (jobExecution.getStatus() == BatchStatus.COMPLETED) {
             LOGGER.info("JOB COMPLETED.");
 
-            List<RawRoute> results = jdbcTemplate.query("SELECT id, from_seq, to_seq, from_port, to_port, " +
-                    "leg_duration, count FROM routes", new RowMapper<RawRoute>() {
+            List<Route> results = jdbcTemplate.query("SELECT id, from_seq, to_seq, from_port, to_port, " +
+                    "leg_duration, count FROM routes", new RowMapper<Route>() {
                 @Override
-                public RawRoute mapRow(ResultSet resultSet, int i) throws SQLException {
-                    RawRoute result = new RawRoute();
+                public Route mapRow(ResultSet resultSet, int i) throws SQLException {
+                    Route result = new Route();
                     result.setId(resultSet.getString(1));
                     result.setFromSeq(resultSet.getInt(2));
                     result.setToSeq(resultSet.getInt(3));
@@ -51,7 +51,7 @@ public class JobCompletionNotificationListener extends JobExecutionListenerSuppo
                 }
             });
 
-            for (RawRoute r : results) {
+            for (Route r : results) {
                 LOGGER.info("Found " + r);
             }
 

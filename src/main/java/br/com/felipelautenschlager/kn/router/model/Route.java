@@ -2,7 +2,7 @@ package br.com.felipelautenschlager.kn.router.model;
 
 import java.util.Objects;
 
-public class RawRoute {
+public class Route {
 
     private String id;
     private int fromSeq;
@@ -81,15 +81,15 @@ public class RawRoute {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        RawRoute rawRoute = (RawRoute) o;
-        return fromSeq == rawRoute.fromSeq &&
-                toSeq == rawRoute.toSeq &&
-                legDuration == rawRoute.legDuration &&
-                count == rawRoute.count &&
-                id.equals(rawRoute.id) &&
-                fromPort.equals(rawRoute.fromPort) &&
-                toPort.equals(rawRoute.toPort) &&
-                points.equals(rawRoute.points);
+        Route route = (Route) o;
+        return fromSeq == route.fromSeq &&
+                toSeq == route.toSeq &&
+                legDuration == route.legDuration &&
+                count == route.count &&
+                id.equals(route.id) &&
+                fromPort.equals(route.fromPort) &&
+                toPort.equals(route.toPort) &&
+                points.equals(route.points);
     }
 
     @Override
@@ -99,7 +99,7 @@ public class RawRoute {
 
     @Override
     public String toString() {
-        return "RawRoute{" +
+        return "Route{" +
                 "id='" + id + '\'' +
                 ", fromSeq=" + fromSeq +
                 ", toSeq=" + toSeq +

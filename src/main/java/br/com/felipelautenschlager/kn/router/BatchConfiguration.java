@@ -70,6 +70,27 @@ public class BatchConfiguration {
                 .build();
     }
 
+    /* STEP 1.2 - PARSE GPS POINTS */
+    @Bean(name = "step2Reader")
+    public ItemReader<Route> parseGPSPointsStep12Reader(DataSource dataSource) {
+        JdbcCursorItemReader<Route> jdbcReader = new JdbcCursorItemReader<>();
+        jdbcReader.setDataSource(dataSource);
+        jdbcReader.setSql("SELECT id, from_seq, to_seq, points " +
+                "FROM routes ORDER BY leg_duration ASC LIMIT 1");
+        jdbcReader.setRowMapper((ResultSet resultSet, int i) -> {
+            Route route = new Route();
+            route.setId(resultSet.getString("id"));
+            route.setFromSeq(resultSet.getInt("from_seq"));
+            route.setToSeq(resultSet.getInt("to_seq"));
+            route.setPoints(resultSet.getString("points"));
+
+            return route;
+        });
+
+
+        return jdbcReader;
+    }
+
     /* STEP 2 - FIND THE BEST ROUTE */
 
     @Bean(name = "step2Reader")
